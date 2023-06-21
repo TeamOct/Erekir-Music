@@ -22,3 +22,20 @@ jobs:
       with:
         name: ${{ github.event.repository.name }}
         path: build/libs/${{ github.event.repository.name }}.jar
+    - name: Make a tag name
+      if: github.ref == 'refs/heads/master'
+      run: |
+        echo "::set-output name=tag::$(date +%Y%m%d%H%M%S)"
+      id: tag_make
+    - name: Create blank release
+      if: github.ref == 'refs/heads/master'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run:
+        hub release create -m "Erekir Music Release" "${{ steps.tag_make.outputs.tag }}"
+    - name: Add jar into release
+      uses: softprops/action-gh-release@v1
+      if: github.ref == 'refs/heads/master'
+      with:
+        tag_name: ${{ steps.tag_make.outputs.tag }}
+        files: build/libs/${{ github.event.repository.name }}.jar
