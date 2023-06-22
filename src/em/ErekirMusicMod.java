@@ -4,12 +4,12 @@ import arc.Events;
 import arc.audio.Music;
 import arc.struct.Seq;
 import arc.util.Log;
-import em.content.EMusic;
 import mindustry.Vars;
 import mindustry.audio.SoundControl;
 import mindustry.content.Planets;
 import mindustry.mod.Mod;
 
+import static em.content.EMusic.*;
 import static mindustry.game.EventType.*;
 
 public class ErekirMusicMod extends Mod {
@@ -35,14 +35,13 @@ public class ErekirMusicMod extends Mod {
     @Override
     public void init() {
         // First and foremost, load the music.
-        EMusic.load();
+        load();
 
         // Initiate music lists here.
         control = Vars.control.sound;
 
-        var universal = Seq.with(EMusic.dosimeter, EMusic.infernalTrain, EMusic.wotu);
-        modAmbient.addAll(universal);
-        modDark.addAll(universal);
+        modAmbient.addAll(dosimeter, coast);
+        modDark.addAll(infernalTrain, wotu);
         modBoss.addAll();
 
         Events.on(MusicRegisterEvent.class, e -> {
