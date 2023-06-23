@@ -3,7 +3,6 @@ package em;
 import arc.Events;
 import arc.audio.Music;
 import arc.struct.Seq;
-import arc.util.Log;
 import mindustry.Vars;
 import mindustry.audio.SoundControl;
 import mindustry.content.Planets;
@@ -41,8 +40,8 @@ public class ErekirMusicMod extends Mod {
         control = Vars.control.sound;
 
         modAmbient.addAll(dosimeter, coast);
-        modDark.addAll(infernalTrain, wotu);
-        modBoss.addAll();
+        modDark.addAll(infernalTrain, wotu, toxicLakes);
+        modBoss.addAll(crossedWings);
 
         Events.on(MusicRegisterEvent.class, e -> {
             vAmbient = control.ambientMusic.copy();
@@ -53,15 +52,11 @@ public class ErekirMusicMod extends Mod {
         Events.on(WorldLoadEvent.class, e -> {
             if (Vars.state.rules.planet == Planets.erekir) {
                 // Inject custom music here.
-                Log.info("The music should load now...");
-
                 control.ambientMusic = modAmbient;
                 control.darkMusic = modDark;
-                //TODO: this will just erase all the boss music since the list is currently empty
-                //control.bossMusic = modBoss;
+                control.bossMusic = modBoss;
             } else {
                 // Reset music in non-Erekir maps.
-                Log.info("Music reset. It should be like vanilla now.");
                 control.ambientMusic = vAmbient;
                 control.darkMusic = vDark;
                 control.bossMusic = vBoss;

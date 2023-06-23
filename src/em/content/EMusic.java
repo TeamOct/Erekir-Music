@@ -4,13 +4,24 @@ import arc.audio.Music;
 import mindustry.Vars;
 
 public class EMusic {
-    public static Music dosimeter, infernalTrain, wotu, coast;
+    public static Music
+        // ambient
+        dosimeter, coast,
+        // dark
+        infernalTrain, wotu, toxicLakes,
+        // boss
+        crossedWings
+    ;
 
     public static void load() {
         dosimeter = loadMusic("dosimeter");
+        coast = loadMusic("the_coast");
+
         infernalTrain = loadMusic("infernal_train");
         wotu = loadMusic("waltz_of_the_underworld");
-        coast = loadMusic("the_coast");
+        toxicLakes = loadMusic("Toxic_lakes");
+
+        crossedWings = loadMusic("crossed_wings");
     }
 
     private static Music loadMusic(String name) {
