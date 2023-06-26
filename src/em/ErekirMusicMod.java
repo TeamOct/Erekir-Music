@@ -6,19 +6,13 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.audio.SoundControl;
 import mindustry.content.Planets;
+import mindustry.core.GameState;
 import mindustry.mod.Mod;
 
 import static em.content.EMusic.*;
 import static mindustry.game.EventType.*;
 
 public class ErekirMusicMod extends Mod {
-    /** List of ambient music. */
-    public Seq<Music> modAmbient = new Seq<>();
-    /** List of "dark" music, usually played during conflicts and dire situations. */
-    public Seq<Music> modDark = new Seq<>();
-    /** List of boss music. Currently empty. */
-    public Seq<Music> modBoss = new Seq<>();
-
     /** List of <i>vanilla</i> ambient music. */
     public Seq<Music> vAmbient;
     /** List of <i>vanilla</i> dark music. */
@@ -36,14 +30,10 @@ public class ErekirMusicMod extends Mod {
         // First and foremost, load the music.
         load();
 
-        // Initiate music lists here.
         control = Vars.control.sound;
 
-        modAmbient.addAll(dosimeter, coast);
-        modDark.addAll(infernalTrain, wotu, toxicLakes);
-        modBoss.addAll(crossedWings);
-
         Events.on(MusicRegisterEvent.class, e -> {
+            // Save copies of vanilla music lists.
             vAmbient = control.ambientMusic.copy();
             vDark = control.darkMusic.copy();
             vBoss = control.bossMusic.copy();
@@ -55,8 +45,12 @@ public class ErekirMusicMod extends Mod {
                 control.ambientMusic = modAmbient;
                 control.darkMusic = modDark;
                 control.bossMusic = modBoss;
-            } else {
-                // Reset music in non-Erekir maps.
+            }
+        });
+
+        Events.on(StateChangeEvent.class, e -> {
+            if (e.from != GameState.State.menu && e.to == GameState.State.menu) {
+                // Reset music upon going to main menu.
                 control.ambientMusic = vAmbient;
                 control.darkMusic = vDark;
                 control.bossMusic = vBoss;
