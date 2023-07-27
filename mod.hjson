@@ -3,7 +3,7 @@ name: "erekir-music"
 author: "Team Oct"
 main: "em.ErekirMusicMod"
 description: "Adds new music to Erekir.\n\nMusic by Saigo no-nozomi.\nProgrammed by Slotterleet."
-version: "1.1.0"
+version: "1.1.0.1"
 minGameVersion: 145
 hidden: true
 java: true

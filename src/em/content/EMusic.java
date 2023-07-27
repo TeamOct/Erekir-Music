@@ -16,14 +16,8 @@ public class EMusic {
     public static void load() {
         // Music categories: ambient, dark, boss.
         Fi musicRoot = Vars.mods.locateMod("erekir-music").root.child("music");
-        if (!musicRoot.isDirectory()) return;
-
         for (var cat : musicRoot.list()) {
-            if (!cat.isDirectory()) return;
-
-            for (var mFile : cat.list()) {
-                if (mFile.isDirectory()) return;
-
+            for (var mFile : cat.findAll(f -> f.extEquals("ogg") || f.extEquals("mp3"))) {
                 var music = loadMusic(cat.name() + "/" + mFile.nameWithoutExtension());
                 switch (cat.name()) {
                     case "ambient" -> modAmbient.add(music);
