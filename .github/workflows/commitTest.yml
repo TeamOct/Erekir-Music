@@ -32,7 +32,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run:
-        hub release create -m "Erekir Music Release" "${{ steps.tag_make.outputs.tag }}"
+        gh release create -t "Erekir Music Release" "${{ steps.tag_make.outputs.tag }}"
     - name: Add jar into release
       uses: softprops/action-gh-release@v1
       if: github.ref == 'refs/heads/master'
