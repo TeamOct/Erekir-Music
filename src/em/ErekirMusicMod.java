@@ -1,6 +1,6 @@
 package em;
 
-import arc.Events;
+import arc.*;
 import arc.audio.Music;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -10,6 +10,7 @@ import mindustry.core.GameState;
 import mindustry.mod.Mod;
 
 import static em.content.EMusic.*;
+import static mindustry.Vars.ui;
 import static mindustry.game.EventType.*;
 
 public class ErekirMusicMod extends Mod {
@@ -27,9 +28,12 @@ public class ErekirMusicMod extends Mod {
 
     @Override
     public void init() {
-        // Check for updates.
         Events.on(ClientLoadEvent.class, e -> {
-            new AutoUpdater();
+            // Check for updates.
+            if (Core.settings.getBool("em-autoupdate", true))
+                new AutoUpdater();
+
+            constructSettings();
         });
 
         // First and foremost, load the music.
@@ -60,6 +64,12 @@ public class ErekirMusicMod extends Mod {
                 control.darkMusic = vDark;
                 control.bossMusic = vBoss;
             }
+        });
+    }
+
+    void constructSettings() {
+        ui.settings.addCategory("@setting.em-title", t -> {
+            t.checkPref("em-autoupdate", true);
         });
     }
 }
