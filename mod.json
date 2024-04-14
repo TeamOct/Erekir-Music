@@ -1,0 +1,11 @@
+{
+    "displayName": "Team Oct's Erekir Music",
+    "name": "erekir-music",
+    "author": "Team Oct",
+    "main": "em.ErekirMusicMod",
+    "description": "Adds new music to Erekir.\n\nMusic by Saigo no-nozomi.\nProgrammed by Slotterleet.",
+    "version": "1.3.0",
+    "minGameVersion": 145,
+    "hidden": true,
+    "java": true
+}

@@ -27,6 +27,11 @@ public class ErekirMusicMod extends Mod {
 
     @Override
     public void init() {
+        // Check for updates.
+        Events.on(ClientLoadEvent.class, e -> {
+            new AutoUpdater();
+        });
+
         // First and foremost, load the music.
         load();
 
